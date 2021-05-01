@@ -5,8 +5,8 @@ class Game {
 
         this.background = new Background(ctx)
         this.spaceship = new Spaceship(ctx)
-        this.enemy1 = new Enemy1(ctx)
-        //this.enemys2 = []
+        this.enemiesBasics = []
+        this.enemiePlatillos = []
 
         this.tick = 0
     }
@@ -16,7 +16,7 @@ class Game {
           this.clear();
           this.draw();
           this.move();
-          //this.addEnemies()
+          this.addEnemies()
           if(this.tick ++ > 10000) {
               this.thick = 0;
           }
@@ -31,10 +31,10 @@ class Game {
     draw() {
         this.background.draw()
         this.spaceship.draw()
-        this.enemy1.draw()
-        //this.enemys2.forEach(en => en.draw())
-        // this.checkcollision()
-        // this.checkCollisionBullet()
+        this.enemiesBasics.forEach(ob => ob.draw())
+        this.enemiePlatillos.forEach(ob => ob.draw())
+        this.checkcollision()
+        this.checkCollisionBullet()
         
     }
 
@@ -43,8 +43,9 @@ class Game {
     move() {
         this.background.move()
         this.spaceship.move()
-        this.enemy1.move()
-        //this.enemys2.forEach(en => en.move())
+        this.enemiesBasics.forEach(ob => ob.move())
+        this.enemiePlatillos.forEach(ob => ob.move())
+      
 
     }
 
@@ -52,26 +53,35 @@ class Game {
         this.spaceship.onKeyEvent(event)
     }
 
-//     checkcollision() {
-//         //const collision1 = this.enemy1.collide(this.spaceship)
-//         const collision2 = this.enemys2.some(ob => ob.collide(this.spaceship))
-   
-//    }
+    checkcollision() {
+        const collision1 = this.enemiesBasics.some(ob => ob.collide(this.spaceship))
+        const collision2 = this.enemiePlatillos.some(ob => ob.collide(this.spaceship))
+        
+   }
 
-//    checkCollisionBullet() {
-//         const bulletEnemy = this.spaceship.weapon.bullets.some(bullet => this.enemys2.collide(bullet))
-     
-//         if (bulletEnemy){
-//           this.enemy2.splice(i,1)
-//           //this.spaceship.weapon.bullets.splice(this.spaceship.weapon.bullets[])
-//         }
-//    }
+   checkCollisionBullet() {
+        const bulletEnemy = this.spaceship.weapon.bullets.some(bullet => this.enemies.some(enemy => enemy.collide(bullet)))
 
-//    addEnemies() {
-//         if (this.tick % 100) {
-//           return
-//        }
-//        this.enemy2.push(new Enemy2(this.ctx))
-//    }
+        if(bulletEnemy) {
+            console.log('ha chocado BALA')
+          
+        }
+       
+        
+        
+   }
+
+   addEnemies() {
+        if (this.tick % 100) {
+          return
+       }
+       this.enemiesBasics.push(new Enemy1(this.ctx))
+       this.enemiePlatillos.push(new Enemy2(this.ctx))
+   }
+
+   clearEnemy() {
+    this.enemiesBasics = this.enemy.filter(b => b.isVisible())
+    this.enemiePlatillos = this.enemy.filter(b => b.isVisible())
+   }
 }   
 

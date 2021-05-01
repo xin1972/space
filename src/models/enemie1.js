@@ -1,13 +1,16 @@
 class Enemy1 {
     constructor(ctx) {
         this.ctx = ctx
-
-        this.x = 350
-        this.y = 30
+        
+        this.render= Math.random()* 800
+        this.x = Math.random()*10 + this.render
+        this.y = 0
 
         this.w = 60
-        this.h =40
-        this.vx = 1
+        this.h = 40
+
+        this.vx = Math.random() * 2
+
 
         this.g = 1
 
@@ -24,10 +27,19 @@ class Enemy1 {
             this.w,
             this.h
         )
+        //this.weaponenemy.draw()
     }
 
     move() {
-        this.y += this.g        
+        this.y += this.g
+        this.x += this.vx
+        if ( this.x +  this.w >= this.ctx.canvas.width ) {
+            this.vx = -2
+        } 
+        
+        if ( this.x < 0) {
+            this.vx = 2
+        }
     }
 
     collide(el) {
@@ -41,5 +53,7 @@ class Enemy1 {
 
     }
 
-    
+    isVisibleEnemy1() {
+        return this.y > this.ctx.canvas.height
+    }    
 }    

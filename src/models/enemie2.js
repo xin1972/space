@@ -2,14 +2,14 @@ class Enemy2 {
     constructor(ctx) {
         this.ctx = ctx
         
-        this.render = Math.random() *100 + 100
+        this.render = Math.random() * 600
         //this.x = Math.random() > 0.5 ? 0 - this.render : this.render + 400
-        this.x = 0
+        this.x =  this.render
         this.y = 0
 
         this.w = 60
         this.h =40
-        this.vx = 2
+        this.vx = Math.random()*10
 
         this.g = 1
 
@@ -30,9 +30,9 @@ class Enemy2 {
 
     move() {
         this.y += this.g
-        this.x += this.vx
-        if ( this.x +  this.width >= this.ctx.canvas.width ) {
-            this.vx = -2
+       
+        if ( this.x  >= 0 ) {
+            this.vx = 2
         }
         // if ( this.x < this.ctx.canvas.width ) {
         //     this.x -= this.vx

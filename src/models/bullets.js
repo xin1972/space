@@ -8,9 +8,14 @@ class Bullet {
         this.r = 5
         this.vy = 5
 
+        this.toDelete = false
+
+        
+
     }
 
     draw() {
+        
         this.ctx.beginPath()
         this.ctx.arc(
             this.x,
@@ -22,10 +27,17 @@ class Bullet {
         this.ctx.fillStyle = 'white'
         this.ctx.fill()
         this.ctx.closePath()
+
+        
+        
     }
 
     move() {
         this.y -= this.vy
+    }
+
+    evaporate() {
+        this.toDelete = true
     }
 
     isVisible() {

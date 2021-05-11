@@ -1,26 +1,44 @@
-class Weaponenemy {
-    constructor(enemy1) {
-        this.enemy1 = enemy1
+class WeaponEnemy {
+    constructor(bomber) {
+        this.bomber = bomber
         this.bombs = []
-        this.canShoot = true
 
-    }
-
-    clearBullets() {
-        this.bullets = this.bullets.filter(b => b.isVisible())
-    }
+        this.tick = 0
+        
+        
+    } 
 
     draw() {
-        this.clearBullets()        
-        setTimeout(()=>{
-            this.enemyBomb.forEach(b => b.draw())
-        },200)
+        this.tick++
+
+        this.clearBombs()
+        if(this.tick === 50) {
+            
+            this.addBomb()
+            this.tick = 0
+        }
+
+        this.bombs.forEach(b => b.draw())
    }
-    
 
     move() {
-        this.bullets.forEach(b => b.move())
+        this.bombs.forEach(b => b.move())
     }
+    
+    addBomb() {
+        const bomb = new Bomb(
+                    this.bomber.ctx,
+                    this.bomber.x + this.bomber.w /2,
+                    this.bomber.y + this.bomber.h    
+                  )
+                  this.bombs.push(bomb)        
+    }
+        
+
+    clearBombs() {
+        this.bombs = this.bombs.filter(b => b.isVisible())
+    }
+    
 
     
 }

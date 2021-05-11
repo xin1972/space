@@ -25,24 +25,49 @@ class Spaceship {
         this.img.src = './images/images/spaceship.png'
 
         this.weapon = new Weapon(this)
+        this.explosion = null
+
+        this.visible = true
+
+        
+
+       
+        
+        //this.particlesArr = []
 
         this.setListeners()
     }
 
     draw() {
-        this.ctx.drawImage(
-            this.img,
-            this.x,
-            this.y,
-            this.w,
-            this.h
-        )
-        this.weapon.draw()
+        if (this.visible) {
+            this.ctx.drawImage(
+                this.img,
+                this.x,
+                this.y,
+                this.w,
+                this.h
+            )
+            this.weapon.draw()
+        } else {
+            
+            this.explosion = new Explosion(this.ctx,this.x,this.y)
+            this.explosion.draw()              
+            this.explosion.visible = false
+            
+        }
+        
+        
+        
+        
+       
+        
+        //this.showParticle
     }
 
     move() {
         this.applyActions()
         this.weapon.move()
+        
         if (this.x >= this.ctx.canvas.width - 75) {
             this.x = this.x -10 
         }
@@ -74,7 +99,7 @@ class Spaceship {
             
             case DOWN:
                 this.actions.down = action
-      
+                break;
             case SPACE:
               this.actions.shoot = action
               break;
@@ -90,7 +115,7 @@ class Spaceship {
 
     applyActions() {
         if (this.actions.right) {   
-                this.x += 5
+            this.x += 5
             }
 
         if (this.actions.left) {
@@ -109,4 +134,29 @@ class Spaceship {
             this.weapon.shoot()
         }
     }
+
+    collide(el) {
+        const collideX = el.x + el.w > this.x && el.x < this.x + this.w;
+        const collideY = el.y < this.y + this.h && el.y + el.h > this.y;
+        
+        
+        return collideX && collideY
+
+    }
+
+    // showParticles() {
+    //     this.particlesArr.unshift(new Particle)
+
+    //     for (i = 0; i <this.particlesArr.length; i++) {
+    //         this.particlesArr[i].update()
+    //         this.particlesArr[i].draw()
+    //     }
+
+    //     if (this.particlesArr.lenght > 60) {
+
+    //         for (let i= 0 ; i <20 ;i++) {
+    //             this.particlesArr.pop(this.particlesArr[i])
+    //         }
+    //     }
+    // }
 }

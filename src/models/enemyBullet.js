@@ -6,9 +6,13 @@ class Bomb {
         this.h = 5
         this.w = 5
         this.r = 5
-        this.vy = 5
+        
+        this.g = 5 
 
+        
     }
+
+    
 
     draw() {
         this.ctx.beginPath()
@@ -22,14 +26,16 @@ class Bomb {
         this.ctx.fillStyle = 'red'
         this.ctx.fill()
         this.ctx.closePath()
+      
+        
     }
 
     move() {
-        this.y += this.vy
+        this.y += this.g
     }
 
     isVisible() {
-        return this.y > this.ctx.canvas.height
+        return this.y < this.ctx.canvas.height
 
         // Is inside canvas?
     }

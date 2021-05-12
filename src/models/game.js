@@ -8,12 +8,7 @@ class Game {
         this.coin = new Coin(ctx)
         this.explosion = new Explosion(ctx)
         this.superEnemy = new SuperEnemy(ctx)
-        
-       
-        
-        
-        
-        
+              
         this.enemies = []
         this.coins = []
         
@@ -28,31 +23,27 @@ class Game {
 
     start() {
         this.intervalId = setInterval(() => {
-          this.clear();
-          this.draw();
-          this.move();
-        //  if(this.enemyUpdate) {
-        //      this.addEnemies()
-        //  } 
-         if(this.superEnemyUpdate) {
-            this.addSuperEnemy()
-         } 
-          
-          
-          
-          
-          this.addCoins()
-          if(this.tick ++ > 10000) {
-              this.thick = 0;
-          }
-          this.updateGame()
-          //this.updateSuperEnemy()
-          this.clearEnemy()
-          //this.checkcollision()
-          this.checkCollisionBullet()
-          //this.chexkCollisionBomb()
-          this.checkCollisionCoins()
-          this.chexkCollisionBombSuperEnemy()
+        this.clear();
+        this.draw();
+        this.move();
+
+        if(this.enemyUpdate) {
+             this.addEnemies()
+        }
+        
+        this.addCoins()
+        if(this.tick ++ > 10000) {
+            this.thick = 0;
+        }
+
+        this.updateGame()
+        this.updateSuperEnemy()
+        this.clearEnemy()
+        this.checkcollision()
+        this.checkCollisionBullet()
+        this.chexkCollisionBomb()
+        this.checkCollisionCoins()
+        this.chexkCollisionBombSuperEnemy()
         }, 1000 /60)
     }
 
@@ -67,10 +58,10 @@ class Game {
         this.coins.forEach(coin => coin.draw())
         this.enemies.forEach(enemy => enemy.draw())
         this.explosion.draw()
-        this.superEnemy.draw()
+        if(this.superEnemyUpdate) {
+            this.superEnemy.draw()
+        }
     }
-
-    
 
     move() {
         this.background.move()
@@ -88,18 +79,16 @@ class Game {
     updateGame() {
         setTimeout(()=>{
             this.enemyUpdate = false
-          },10000)
+          },20000)
     }
 
     updateSuperEnemy() {
         setTimeout(()=>{
             this.superEnemyUpdate = true
-          },5000)
-
+          },29000)
     }
 
     checkcollision() {
-
         const collision1 = this.enemies.some( enemy => enemy.collide(this.spaceship))
         if (collision1){
             console.log('choco')
@@ -130,8 +119,9 @@ class Game {
             this.danger ++
         }
 
-        if (this.danger === 10) {
+        if (this.danger === 30) {
             this.superEnemy.visible = false
+            this.score += 500
             setTimeout(()=>{
                 this.gameWin()
               },2000)
@@ -216,16 +206,8 @@ class Game {
              
     }
 
-    addSuperEnemy() {
-        
-        this.superEnemy = new SuperEnemy(ctx)
-            
-    }
-
     clearEnemy() {
-
        this.enemies = this.enemies.filter(b => b.isVisibleEnemy()) 
-
     }
 
     addCoins() {
@@ -243,11 +225,14 @@ class Game {
           if(coinSpaceship) {
             console.log('touch')
             this.spaceship.weapon.super = true
+
             setTimeout(()=>{
                 this.spaceship.weapon.super = false
                 },10000)  //// un setTImeout que ponga el super de la weapon a false otra vez 10 segundos   
       }
     }
+
+    
 
     gameOver() {
 
@@ -270,21 +255,21 @@ class Game {
         this.ctx.textAlign = "center";
         this.ctx.fillStyle = 'white'
         this.ctx.fillText(
-          "YOU WIN",
+          "YOU WIN ",
           this.ctx.canvas.width / 2,
           this.ctx.canvas.height / 2
           )  
-
+        this.ctx.fillText(
+          "YOUR SCORE :" + this.score,
+          this.ctx.canvas.width / 2 ,
+          this.ctx.canvas.height / 2 +100
+          )  
      }
 
      drawScore() {
         this.ctx.font = "16px Comic Sans MS"
         this,ctx.fillStyle = 'white'
         this.ctx.fillText("Score:"+this.score,8,20)
-     }
-
-    
-    
-
+     }   
 }   
 

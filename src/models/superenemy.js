@@ -11,21 +11,20 @@ class SuperEnemy {
         this.vy = 1
 
         this.img = new Image()
-        this.img.src = "./images/images/enemigo2.png"
+        this.img.src = "./images/images/enemigo1.png"
 
         this.weapon = new WeaponEnemy(this)
 
         this.explosion = null
 
-        this.visible = false
+        this.visible = true
 
 
     }
 
     draw() {
-        
-        if (this.visible) {
-            this.ctx.drawImage(
+        if(this.visible) {
+        this.ctx.drawImage(
                 this.img,
                 this.x,
                 this.y,
@@ -33,26 +32,25 @@ class SuperEnemy {
                 this.h
             )
             this.weapon.draw()
-        // } else {
+         } else {
             
-        //     this.explosion = new Explosion(this.ctx,this.x,this.y)
-        //     this.explosion.draw()              
-        //     //this.explosion.visible = false
+            this.explosion = new Explosion(this.ctx,this.x,this.y)
+            this.explosion.draw()              
+            this.explosion.visible = false
             
-        }   
-    }
+       }   
 
+    }
     move() {
         this.x += this.vx
         if ( this.x +  this.w >= this.ctx.canvas.width ) {
             this.vx = -2
         } 
         
-        if ( this.x < 0) {
+        if ( this.x < 0 ) {
             this.vx = 2
         }
-        this.weapon.move()
-        
+        this.weapon.move()       
     }
 
     collide(el) {
@@ -61,7 +59,9 @@ class SuperEnemy {
         
         
         return collideX && collideY
-
     }
+
+}    
+
+
     
-}

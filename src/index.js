@@ -4,11 +4,10 @@ const game = new Game(ctx)
 
 
 
-  
-  // const starBtn =document.getElementById('start-btn');
-  // starBtn.addEventListener('click',() => {
-   game.start()
-  // })
+//const starBtn =document.getElementById('start-btn');
+//starBtn.addEventListener('click',() => {
+game.start()
+//})
   
 
   
